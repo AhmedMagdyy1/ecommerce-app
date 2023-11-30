@@ -10,17 +10,21 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignOutComponent } from './sign-out/sign-out.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { authGuard } from './auth.guard';
+import { ProductDetailsComponent } from './products/product-details/product-details.component';
 
 const routes: Routes = [
   {path:'',redirectTo:"home",pathMatch:'full'},
   {path:'home',canActivate:[authGuard],component:HomeComponent},
   {path:'about',canActivate:[authGuard],component:AboutComponent},
-  {path:'cart',canActivate:[authGuard],component:CartComponent},
   {path:'brands',canActivate:[authGuard],component:BrandComponent},
   {path:'products',canActivate:[authGuard],component:ProductsComponent},
   {path:'categories',canActivate:[authGuard],component:CategoriesComponent},
+  {path:'productDetails/:id',canActivate:[authGuard],component:ProductDetailsComponent},
+  // lazy loading setting module
+  {path:'setting',canActivate:[authGuard],loadChildren:()=>import('../app/setting/setting.module').then((m)=>m.SettingModule)},
   {path:'login',component:SignInComponent},
   {path:'signup',component:SignOutComponent},
+  { path: 'cart', loadChildren: () => import('./cart/cart.module').then(m => m.CartModule) },
   {path:'**',component:NotFoundComponent}
 ];
 

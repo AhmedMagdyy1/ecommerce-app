@@ -1,1 +1,31 @@
-<p>cart works!</p>
+<div class="container my-5">
+    <h2>Cart Details : </h2>
+    <div class="bg-main-light rounded-3" *ngIf="cartDetails?.data">
+        <div class="d-flex p-5 justify-content-between">
+            <div class="total-item">
+                <h4>total Items : <span class="text-main"> {{cartDetails.numOfCartItems}}</span></h4>
+            </div>
+            <div class="total-price">
+                <h4>total Price : <span class="text-main"> {{cartDetails.data.totalCartPrice}}</span></h4>
+            </div>
+        </div>
+        <div class="row border-bottom mb-4 align-items-center" *ngFor="let product of cartDetails.data.products | filteredProducts">
+        <div class="col-md-1">
+            <img [src]='product.product.imageCover' class="w-100" alt="fresh-cart">
+        </div>
+        <div class="col-md-9">
+            <h4>{{product.product.title}}</h4>
+            <div class="text-main">{{product.product.category.name}}</div>
+            <div class="d-flex align-items-center justify-content-between w-25 mt-4">
+                <div class="text-main">{{product.price}} EGP</div>
+                <button class="btn p-0 text-danger" (click)="removeProduct(product.product.id)"><i class="fa-regular fa-trash-can"></i>Remove</button>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-danger" (click)="updateCount(product.count-1,product.product.id)">-</button>
+            <span class="mx-1">{{product.count}}</span>
+            <button class="btn btn-success" (click)="updateCount(product.count+1,product.product.id)">+</button>
+        </div>
+        </div>
+    </div>
+</div>

@@ -14,15 +14,25 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignOutComponent } from './sign-out/sign-out.component';
 import { ProductsComponent } from './products/products.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { ProductItemComponent } from './products/product-item/product-item.component';
+import { FeaturedProductsComponent } from './featured-products/featured-products.component';
+import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { StringTrimPipe } from './string-trim.pipe';
+import { ProductSearchPipe } from './product-search.pipe';
+
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
     BrandComponent,
-    CartComponent,
     CategoriesComponent,
     FooterComponent,
     HomeComponent,
@@ -30,13 +40,21 @@ import {HttpClientModule} from '@angular/common/http';
     NotFoundComponent,
     SignInComponent,
     SignOutComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProductItemComponent,
+    FeaturedProductsComponent,
+    ProductDetailsComponent,
+    StringTrimPipe,
+    ProductSearchPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    CarouselModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
