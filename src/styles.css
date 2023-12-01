@@ -13,6 +13,7 @@
 
   body {
     font-family: var(--font-family);
+    padding-top: 100px;
   }
   
   .rating-color {

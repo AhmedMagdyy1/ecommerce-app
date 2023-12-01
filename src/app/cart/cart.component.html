@@ -1,5 +1,8 @@
 <div class="container my-5">
-    <h2>Cart Details : </h2>
+    <div class="d-flex justify-content-between my-4">
+        <h2>Cart Details : </h2>
+    <a [routerLink]="['/checkout/',cartDetails?.data?._id]" class="btn btn-primary">Continue To Payment</a>
+    </div>
     <div class="bg-main-light rounded-3" *ngIf="cartDetails?.data">
         <div class="d-flex p-5 justify-content-between">
             <div class="total-item">

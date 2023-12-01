@@ -11,6 +11,8 @@ import { SignOutComponent } from './sign-out/sign-out.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { authGuard } from './auth.guard';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
   {path:'',redirectTo:"home",pathMatch:'full'},
@@ -24,12 +26,15 @@ const routes: Routes = [
   {path:'setting',canActivate:[authGuard],loadChildren:()=>import('../app/setting/setting.module').then((m)=>m.SettingModule)},
   {path:'login',component:SignInComponent},
   {path:'signup',component:SignOutComponent},
+  {path:'checkout/:cartId',component:CheckoutComponent},
+  {path:'allorders',component:OrdersComponent},
   { path: 'cart', loadChildren: () => import('./cart/cart.module').then(m => m.CartModule) },
   {path:'**',component:NotFoundComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  // to make # in the url when the app is on real server /#/cart
+  imports: [RouterModule.forRoot(routes,{useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

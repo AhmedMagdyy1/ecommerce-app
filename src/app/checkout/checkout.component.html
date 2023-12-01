@@ -1,0 +1,9 @@
+<form class="w-75 mx-auto my-5" (ngSubmit)="checkoutDetails(shippingAddress)" [formGroup]="shippingAddress">
+    <label >Details</label>
+    <input class="form-control mb-4" type="text" formControlName="details">
+    <label >Phone</label>
+    <input class="form-control mb-4" type="text" formControlName="phone">
+    <label >City</label>
+    <input class="form-control mb-4" type="text" formControlName="city">
+    <button class="btn btn-outline-primary w-100">Pay</button>
+</form>

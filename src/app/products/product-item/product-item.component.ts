@@ -19,7 +19,7 @@ export class ProductItemComponent {
   addToCart(id:string){
     this._cart.addProductToCart(id).subscribe((res)=>{
       console.log(res);
-
+      this._cart.numberOfItems.next(res.numOfCartItems)
     })
   }
 }

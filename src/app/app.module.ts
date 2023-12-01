@@ -15,7 +15,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignOutComponent } from './sign-out/sign-out.component';
 import { ProductsComponent } from './products/products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ProductItemComponent } from './products/product-item/product-item.component';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
@@ -23,6 +23,10 @@ import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { StringTrimPipe } from './string-trim.pipe';
 import { ProductSearchPipe } from './product-search.pipe';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { OrdersComponent } from './orders/orders.component';
+import { HttpInterceptorInterceptor } from './http-interceptor.interceptor';
+import { LoaderComponent } from './loader/loader.component';
 
 
 
@@ -46,6 +50,9 @@ import { ProductSearchPipe } from './product-search.pipe';
     ProductDetailsComponent,
     StringTrimPipe,
     ProductSearchPipe,
+    CheckoutComponent,
+    OrdersComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +63,13 @@ import { ProductSearchPipe } from './product-search.pipe';
     CarouselModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:HttpInterceptorInterceptor,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
