@@ -3,30 +3,30 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AboutComponent } from './about/about.component';
-import { BrandComponent } from './brand/brand.component';
-import { CartComponent } from './cart/cart.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { FooterComponent } from './footer/footer.component';
-import { HomeComponent } from './home/home.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { SignOutComponent } from './sign-out/sign-out.component';
-import { ProductsComponent } from './products/products.component';
+import { BrandComponent } from './pages/brand/brand.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HomeComponent } from './pages/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { ProductsComponent } from './pages/products/products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import { ProductItemComponent } from './products/product-item/product-item.component';
-import { FeaturedProductsComponent } from './featured-products/featured-products.component';
-import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import { ProductItemComponent } from './pages/products/product-item/product-item.component';
+import { FeaturedProductsComponent } from './components/featured-products/featured-products.component';
+import { ProductDetailsComponent } from './pages/products/product-details/product-details.component';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { StringTrimPipe } from './string-trim.pipe';
-import { ProductSearchPipe } from './product-search.pipe';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { OrdersComponent } from './orders/orders.component';
-import { HttpInterceptorInterceptor } from './http-interceptor.interceptor';
-import { LoaderComponent } from './loader/loader.component';
+import { StringTrimPipe } from './core/pipes/string-trim.pipe';
+import { ProductSearchPipe } from './core/pipes/product-search.pipe';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { HttpInterceptorInterceptor } from './core/services/http-interceptor.interceptor';
+import { LoaderComponent } from './components/loader/loader.component';
+import { WishlistComponent } from './pages/wishlist/wishlist.component';
 
 
 
@@ -35,15 +35,14 @@ import { LoaderComponent } from './loader/loader.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AboutComponent,
     BrandComponent,
     CategoriesComponent,
     FooterComponent,
     HomeComponent,
     NavbarComponent,
     NotFoundComponent,
-    SignInComponent,
-    SignOutComponent,
+    LoginComponent,
+    SignUpComponent,
     ProductsComponent,
     ProductItemComponent,
     FeaturedProductsComponent,
@@ -53,6 +52,7 @@ import { LoaderComponent } from './loader/loader.component';
     CheckoutComponent,
     OrdersComponent,
     LoaderComponent,
+    WishlistComponent,
   ],
   imports: [
     BrowserModule,

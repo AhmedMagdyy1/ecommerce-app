@@ -1,23 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { CartComponent } from './cart/cart.component';
-import { BrandComponent } from './brand/brand.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { ProductsComponent } from './products/products.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { SignOutComponent } from './sign-out/sign-out.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { authGuard } from './auth.guard';
-import { ProductDetailsComponent } from './products/product-details/product-details.component';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { OrdersComponent } from './orders/orders.component';
+import { HomeComponent } from './pages/home/home.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { BrandComponent } from './pages/brand/brand.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { authGuard } from './core/services/auth.guard';
+import { ProductDetailsComponent } from './pages/products/product-details/product-details.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', canActivate: [authGuard], component: HomeComponent },
-  { path: 'about', canActivate: [authGuard], component: AboutComponent },
   { path: 'brands', canActivate: [authGuard], component: BrandComponent },
   { path: 'products', canActivate: [authGuard], component: ProductsComponent },
   {
@@ -30,15 +28,13 @@ const routes: Routes = [
     canActivate: [authGuard],
     component: ProductDetailsComponent,
   },
-  // lazy loading setting module
-  // {path:'setting',canActivate:[authGuard],loadChildren:()=>import('../app/setting/setting.module').then((m)=>m.SettingModule)},
-  { path: 'login', component: SignInComponent },
-  { path: 'signup', component: SignOutComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignUpComponent },
   { path: 'checkout/:cartId', component: CheckoutComponent },
   { path: 'allorders', component: OrdersComponent },
   {
     path: 'cart',
-    loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
+    loadChildren: () => import('./core/shared/cart.module').then((m) => m.CartModule),
   },
   { path: '**', component: NotFoundComponent },
 ];
