@@ -9,7 +9,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { NotfoundComponent } from './pages/not-found/notfound.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { ProductsComponent } from './pages/products/products.component';
@@ -40,7 +40,7 @@ import { WishlistComponent } from './pages/wishlist/wishlist.component';
     FooterComponent,
     HomeComponent,
     NavbarComponent,
-    NotFoundComponent,
+    NotfoundComponent,
     LoginComponent,
     SignUpComponent,
     ProductsComponent,
