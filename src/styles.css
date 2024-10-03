@@ -67,6 +67,10 @@
   .product {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   .product .add-btn {
@@ -79,12 +83,6 @@
     opacity: 1;
     transform: translateY(0%);
   }
-  
-
-  .itemProducts{
-    cursor: pointer;
-  }
-
 
   .mat-spinner {
     color: white;
