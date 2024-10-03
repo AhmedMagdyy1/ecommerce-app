@@ -12,6 +12,8 @@ export class SignUpComponent {
 
   isLoading:boolean = false
   handleError:string = ''
+  hidePassword: boolean = true; // New variable to toggle password visibility
+  hideRePassword: boolean = true; // New variable to toggle password visibility
 
   constructor(private _authService:AuthService,private _router:Router){}
 
@@ -23,7 +25,13 @@ export class SignUpComponent {
     phone: new FormControl('',[Validators.required,Validators.minLength(10),Validators.maxLength(13)]),
   })
 
-
+// Toggle password visibility
+togglePasswordVisibility() {
+  this.hidePassword = !this.hidePassword;
+}
+toggleRePasswordVisibility() {
+  this.hideRePassword = !this.hideRePassword;
+}
 
   userRegister(form:FormGroup){
     console.log(form);

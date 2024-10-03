@@ -27,6 +27,12 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { HttpInterceptorInterceptor } from './core/services/http-interceptor.interceptor';
 import { LoaderComponent } from './components/loader/loader.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 
@@ -61,7 +67,12 @@ import { WishlistComponent } from './pages/wishlist/wishlist.component';
     HttpClientModule,
     BrowserAnimationsModule,
     CarouselModule,
-    FormsModule
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   providers: [
     {
