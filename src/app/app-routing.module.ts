@@ -12,6 +12,8 @@ import { authGuard } from './core/services/auth.guard';
 import { ProductDetailsComponent } from './pages/products/product-details/product-details.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
+import { WishlistComponent } from './pages/wishlist/wishlist.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,10 +32,13 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
+  { path: 'forgetPassword', component: ForgetPasswordComponent },
   { path: 'checkout/:cartId', component: CheckoutComponent },
   { path: 'allorders', component: OrdersComponent },
+  { path: 'wishlist', component: WishlistComponent },
   {
     path: 'cart',
+    canActivate: [authGuard],
     loadChildren: () => import('./core/shared/cart.module').then((m) => m.CartModule),
   },
   { path: '**', component: NotfoundComponent },
