@@ -1,12 +1,15 @@
-<div class="container my-5">
-    <owl-carousel-o [options]="customOptions">
-
-        <ng-container *ngFor="let slide of allCategories">
-          <ng-template carouselSlide >
-            <img [src]="slide.image" height="300">
-            <h4>{{slide.name}}</h4>
-          </ng-template>
-        </ng-container>
-    
-      </owl-carousel-o>
+<div class="row g-3">
+  <div *ngFor="let category of categoriesList" class="col-md-4">
+    <div
+      (click)="goToCategory(category.name, category._id)"
+      class="card cursor-pointer rounded rounded-2 overflow-hidden border border-1"
+    >
+      <div class="card-img">
+        <img class="w-100" [src]="category.image" [alt]="category.name" />
+      </div>
+      <div class="card-body text-center h3">
+        <p>{{ category.name }}</p>
+      </div>
+    </div>
+  </div>
 </div>

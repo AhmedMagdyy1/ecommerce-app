@@ -1,47 +1,40 @@
-import { OwlOptions } from 'ngx-owl-carousel-o/public_api';
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../core/services/products.service';
-import { Category } from '../../core/interfaces/category';
+import { Category, list } from '../../core/interfaces/category';
+import { CategoriesService } from 'src/app/core/services/categories.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent implements OnInit {
+  categoriesList: list[] = [];
 
-  allCategories:Category[] = []
-
-  constructor(private _productService:ProductsService){
-
-  }
+  constructor(
+    private _CategoriesService: CategoriesService,
+    private _Router: Router,
+    private _ProductsService: ProductsService
+  ) {}
 
   ngOnInit(): void {
-    this.getAllCategories()
+    this.getAllCategories();
   }
 
-
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    margin:20,
-    navText: ['<', '>'],
-    responsive: {
-      0: {
-        items: 7
-      }
-    },
-    nav: true
+  getAllCategories() {
+    this._CategoriesService.getAllCategories().subscribe({
+      next: (response: Category) => {
+        this.categoriesList = response.data;
+      },
+      error: (err) => {},
+    });
   }
 
-  getAllCategories(){
-    this._productService.getCategories().subscribe((res:any)=>{
-      console.log(res);
-      this.allCategories = res.data
-    })
+  goToCategory(categoryName: string, categoryId: string) {
+    this._ProductsService.page = 1;
+    this._ProductsService.category = categoryId;
+    this._ProductsService.categoryName.next(categoryName);
+    this._Router.navigate(['/products']);
   }
 }
