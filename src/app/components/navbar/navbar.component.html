@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white fixed-top">
   <div class="container">
-    <a class="navbar-brand" [routerLink]="''">
+    <a class="navbar-brand" routerLinkActive="active-link" [routerLink]="'/'">
       <img src="assets/images/freshcart-logo.svg" alt="fresh-cart" />
     </a>
     <button
@@ -17,39 +17,52 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isLoggedIn">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" [routerLink]="''"
+          <a class="nav-link" aria-current="page" routerLinkActive="active-link" [routerLink]="'/home'"
             >Home</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'products'">Products</a>
+          <a class="nav-link" routerLinkActive="active-link" [routerLink]="'products'">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'categories'">Categories</a>
+          <a class="nav-link" routerLinkActive="active-link" [routerLink]="'categories'">Categories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'brands'">Brands</a>
+          <a class="nav-link" routerLinkActive="active-link" [routerLink]="'brands'">Brands</a>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item" *ngIf="!isLoggedIn">
-          <a class="nav-link" [routerLink]="'login'"> Login </a>
-        </li>
-        <li class="nav-item" *ngIf="!isLoggedIn">
-          <a class="nav-link" [routerLink]="'signup'"> Sign Up </a>
-        </li>
         <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" (click)="logOut()" [routerLink]="'login'"
-            >Logout</a
-          >
+          <a class="nav-link" routerLinkActive="active-link" routerLink="/wishlist">
+            <i class="fa-solid fs-5 fa-heart-circle-check">
+              <span
+                *ngIf="wishListItems"
+                [matBadge]="wishListItems"
+                matBadgePosition="above after"
+                matBadgeColor="warn"
+                matBadgeSize="small"
+              ></span>
+            </i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="nav-link" routerLinkActive="active-link" [routerLink]="'login'"> Login </a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="nav-link" routerLinkActive="active-link" [routerLink]="'signup'"> Sign Up </a>
         </li>
         <li class="nav-item position-relative" *ngIf="isLoggedIn">
-          <a class="nav-link" [routerLink]="'cart'">
+          <a class="nav-link" routerLinkActive="active-link" [routerLink]="'cart'">
             <i class="fa fs-4 me-2 fa-shopping-cart"></i>
-            <div class="bg-main position-absolute top-0 end-0 badge">
-              {{ numberOfItems <= 0 ? "" : numberOfItems }}
+            <div *ngIf="numberOfItems > 0" class="bg-main position-absolute top-0 end-0 badge">
+              {{ numberOfItems }}
             </div>
           </a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link" (click)="logOut()" routerLinkActive="active-link" [routerLink]="'login'"
+            >Logout</a
+          >
         </li>
       </ul>
     </div>
