@@ -14,11 +14,11 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProductItemComponent } from './pages/products/product-item/product-item.component';
 import { FeaturedProductsComponent } from './components/featured-products/featured-products.component';
 import { ProductDetailsComponent } from './pages/products/product-details/product-details.component';
-import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { StringTrimPipe } from './core/pipes/string-trim.pipe';
 import { ProductSearchPipe } from './core/pipes/product-search.pipe';
@@ -32,11 +32,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
-
-
-
-
-
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatMenuModule } from '@angular/material/menu';
+import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +58,7 @@ import { MatIconModule } from '@angular/material/icon';
     OrdersComponent,
     LoaderComponent,
     WishlistComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,15 +72,18 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
-    MatIconModule
+    MatIconModule,
+    MatStepperModule,
+    MatBadgeModule,
+    MatMenuModule
   ],
   providers: [
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:HttpInterceptorInterceptor,
-      multi:true
-    }
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
