@@ -40,6 +40,25 @@ export class AuthService {
    return  this.http.post('https://ecommerce.routemisr.com/api/v1/auth/signin',data)
   }
 
+  forgotPasswordMethod(email: string): Observable<any> {
+    return this.http.post(
+      `https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords`,
+      email
+    );
+  }
+  verifyResetCodeMethod(code: string): Observable<any> {
+    return this.http.post(
+      `https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode`,
+      code
+    );
+  }
+  resetPasswordMethod(newPassword: string): Observable<any> {
+    return this.http.put(
+      `https://ecommerce.routemisr.com/api/v1/auth/resetPassword`,
+      newPassword
+    );
+  }
+
 
   removeToken() {
     localStorage.removeItem('userToken')
