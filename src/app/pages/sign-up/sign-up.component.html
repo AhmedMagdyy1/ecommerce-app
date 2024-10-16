@@ -103,7 +103,7 @@
   
         <!-- Phone Field -->
         <mat-form-field appearance="outline" class="mb-3 w-100">
-          <mat-label>Phone</mat-label>
+          <mat-label>Phone - must be an Egyptian number.</mat-label>
           <input
             matInput
             type="tel"
@@ -111,7 +111,7 @@
             placeholder="Enter your phone number"
           />
           <mat-error *ngIf="registerForm.get('phone')?.hasError('required')">
-            Phone number is required.
+            Phone number is required and must be an Egyptian number.
           </mat-error>
           <mat-error *ngIf="registerForm.get('phone')?.hasError('pattern')">
             Please enter a valid phone number.
