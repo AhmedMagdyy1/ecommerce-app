@@ -31,8 +31,12 @@ export class CartService {
   removeProduct(id:string):Observable<any>{
     return this._http.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`)
   }
+
+  clearUserCart(): Observable<any> {
+    return this._http.delete(`https://ecommerce.routemisr.com/api/v1/cart/`);
+  }
   handleOnlinePayment(cartId:string,shippingAddress:any):Observable<any>{
-    return this._http.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:4200`,{
+    return this._http.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://freshcart-five-psi.vercel.app/#/home`,{
       shippingAddress:shippingAddress
     })
   }

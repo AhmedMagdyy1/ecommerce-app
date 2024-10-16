@@ -1,32 +1,43 @@
+export interface CartDetails {
+  status: string;
+  numOfCartItems: number;
+  data: Data;
+}
+
 export interface Cart {
-    numOfCartItems:number,
-    data:Data
+  numOfCartItems: number;
+  data: Data;
 }
 
-interface Data {
-    totalCartPrice:number
-    products:Products[]
-    _id:string
+export interface Data {
+  totalCartPrice: number;
+  products: Products[];
+  _id: string;
 }
 
-interface Products {
-    count:number,
-    price:number,
-    product:InnerProduct
+export interface Products {
+  count: number;
+  _id: string;
+  price: number;
+  product: InnerProduct;
 }
 
-interface InnerProduct{
-    imageCover:string,
-    // quantity:number,
-    // ratingsAverage:number,
-    title:string
-    category:ProductCategory
-    id:string
+export interface InnerProduct {
+  subcategory: Brand[];
+  _id: string;
+  title: string;
+  quantity: number;
+  imageCover: string;
+  category: Brand;
+  brand: Brand;
+  ratingsAverage: number;
+  id: string;
 }
 
-
-interface ProductCategory{
-    // image:string,
-    name:string,
-    // slug:string
+export interface Brand {
+  _id: string;
+  name: string;
+  slug: string;
+  image?: string;
+  category?: string;
 }

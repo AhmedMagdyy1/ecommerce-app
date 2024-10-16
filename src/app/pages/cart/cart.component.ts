@@ -1,36 +1,82 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../core/shared/cart.service';
-import { Cart } from '../../core/interfaces/cart';
+import { CartDetails, Products } from '../../core/interfaces/cart';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
+  cartDetails: CartDetails | null = null;
+  cartProductsArray: Products[] | null = null;
 
-
-  cartDetails:Cart = {} as Cart
-  constructor(private _cart:CartService){}
-
+  constructor(private _CartService: CartService) {}
 
   ngOnInit(): void {
-    this._cart.getUserCart().subscribe((res)=>{
-      console.log(res);
-      this.cartDetails = res
-    })
+    this.getAllCartProducts();
   }
 
-
-  updateCount(count:number,id:string){
-    this._cart.updateCount(count,id).subscribe((res)=>{
-      this.cartDetails = res
-    })
+  getAllCartProducts() {
+    this._CartService.getUserCart().subscribe({
+      next: (response: CartDetails) => {
+        this._CartService.cartId.next(response.data._id);
+        this.cartDetails = response;
+        this.cartProductsArray = response.data.products;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
-  removeProduct(id:string){
-    this._cart.removeProduct(id).subscribe((res)=>{
-      this.cartDetails=res
-    })
+  deleteProduct(productId: string) {
+    this._CartService.removeProduct(productId).subscribe({
+      next: (response: CartDetails) => {
+        this._CartService.numberOfItems.next(response.numOfCartItems);
+        if (response.numOfCartItems === 0) {
+          this.deleteAllCart();
+        } else {
+          this.cartDetails = response;
+          this.cartProductsArray = response.data.products;
+        }
+      },
+      error: (err) => {},
+    });
   }
+
+  updateProductQuantity(productId: string, count: number) {
+    this._CartService.updateCount(count, productId).subscribe({
+      next: (response: CartDetails) => {
+        this._CartService.numberOfItems.next(response.numOfCartItems);
+        this.cartDetails = response;
+        this.cartProductsArray = response.data.products;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  increaseProductQuantity(productId: string, count: number) {
+    this.updateProductQuantity(productId, ++count);
+  }
+
+  decreaseProductQuantity(productId: string, count: number) {
+    if (--count === 0) {
+      this.deleteProduct(productId);
+    } else {
+      this.updateProductQuantity(productId, --count);
+    }
+  }
+
+  deleteAllCart() {
+    this._CartService.clearUserCart().subscribe({
+      next: () => {
+        this._CartService.numberOfItems.next(0);
+        this.cartDetails = null;
+      },
+    });
+  }
+  
 }

@@ -1,34 +1,92 @@
-<div class="container my-5">
-    <div class="d-flex justify-content-between my-4">
-        <h2>Cart Details : </h2>
-        <a *ngIf="cartDetails?.data" [routerLink]="['/checkout/', cartDetails.data._id]" class="btn btn-primary">Continue To Payment</a>
+<ng-template #noCartFound>
+    <div class="py-3 bg-secondary-subtle text-center">
+      <span class="h5 d-block mb-2">No products in your cart</span>
+      <a class="btn bg-main text-white py-2 px-3" routerLink="/home"
+        >Continue Shopping <i class="fa-solid fa-shopping-cart"></i
+      ></a>
     </div>
-    <div class="bg-main-light rounded-3" *ngIf="cartDetails?.data">
-        <div class="d-flex p-5 justify-content-between">
-            <div class="total-item">
-                <h4>total Items : <span class="text-main"> {{cartDetails.numOfCartItems}}</span></h4>
-            </div>
-            <div class="total-price">
-                <h4>total Price : <span class="text-main"> {{cartDetails.data.totalCartPrice}}</span></h4>
-            </div>
-        </div>
-        <div class="row border-bottom mb-4 align-items-center" *ngFor="let product of cartDetails.data.products | filteredProducts">
-        <div class="col-md-1">
-            <img [src]='product.product.imageCover' class="w-100" alt="fresh-cart">
-        </div>
-        <div class="col-md-9">
-            <h4>{{product.product.title}}</h4>
-            <div class="text-main">{{product.product.category.name}}</div>
-            <div class="d-flex align-items-center justify-content-between w-25 mt-4">
-                <div class="text-main">{{product.price}} EGP</div>
-                <button class="btn p-0 text-danger" (click)="removeProduct(product.product.id)"><i class="fa-regular fa-trash-can"></i>Remove</button>
-            </div>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-danger" (click)="updateCount(product.count-1,product.product.id)">-</button>
-            <span class="mx-1">{{product.count}}</span>
-            <button class="btn btn-success" (click)="updateCount(product.count+1,product.product.id)">+</button>
-        </div>
-        </div>
+  </ng-template>
+  
+  <div *ngIf="cartDetails; else noCartFound" class="content">
+    <h2 class="text-center">
+      <i class="fa-solid fa-cart-shopping"></i>
+      Cart
+    </h2>
+    <div class="cart-header d-flex align-items-center justify-content-between">
+      <p>
+        Total Price:
+        <span class="text-main">{{ cartDetails.data.totalCartPrice }}</span>
+      </p>
+      <p>
+        Cart Items:
+        <span class="text-main">{{ cartDetails.numOfCartItems }}</span>
+      </p>
     </div>
-</div>
+    <div class="table-responsive pb-3">
+      <table class="table table-striped text-center">
+        <thead class="table-secondary">
+          <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="align-middle" *ngFor="let item of cartProductsArray">
+            
+            <td>
+              <div class="image-container">
+                <img
+                  class="w-100"
+                  [src]="item.product.imageCover"
+                  [alt]="item.product.title"
+                />
+              </div>
+            </td>
+            <td>
+              <span>{{
+                item.product.title.split(" ").splice(0, 2).join(" ")
+              }}</span>
+            </td>
+            <td>
+              <span>{{ item.price | currency : "EGP " }}</span>
+            </td>
+            <td>
+              <i
+                (click)="increaseProductQuantity(item.product.id, item.count)"
+                class="fa-solid fa-plus p-2 fa-0 fw-lighter cursor-pointer"
+              ></i>
+              <span class="px-3">{{ item.count }}</span>
+              <i
+                (click)="decreaseProductQuantity(item.product.id, item.count)"
+                class="fa-solid fa-minus p-2 cursor-pointer"
+              ></i>
+            </td>
+            <td>
+              <span>{{ item.price * item.count | currency : "EGP " }}</span>
+            </td>
+            <td>
+                <i
+                  (click)="deleteProduct(item.product.id)"
+                  class="fa-solid fa-trash cursor-pointer text-danger"
+                ></i>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        class="button-container d-flex justify-content-between align-items-center"
+      >
+        <button (click)="deleteAllCart()" class="btn btn-danger">
+          Clear Cart <i class="fa-solid fa-trash"></i>
+        </button>
+        <a routerLink="/checkout" class="btn bg-main text-white">
+          CheckOut <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  
