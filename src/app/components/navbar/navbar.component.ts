@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit {
     this._cartService.numberOfItems.subscribe((res) => {
       this.numberOfItems = res;
     });
+    this._WishlistService.checkWishListItems();
     //   if (this._authService.userData != null){
     //      this.isLoggedIn = true
     //   }else {
