@@ -25,9 +25,9 @@
       class="w-100"
       alt="{{ product.category.name }}"
     />
-    <p class="text-main">{{ product.category.name }}</p>
-    <h2 class="h6">{{ product.title | stringTrim : 2 }}</h2>
-    <div class="d-flex justify-content-between">
+    <h2 class="h6 mt-2">{{ product.title | stringTrim : 2 }}</h2>
+    <p class="text-main">Category: {{ product.category.name }}</p>
+    <div class="d-flex justify-content-between text-black">
       <span>{{ product.price }} EGP</span>
       <div>
         <i class="fa fa-star rating-color"></i>
@@ -35,7 +35,7 @@
       </div>
     </div>
   </a>
-  <button class="btn bg-main w-100 text-white" (click)="addToCart(product.id)">
+  <button class="btn bg-main w-100 text-white mt-2" (click)="addToCart(product.id)">
     + Add
   </button>
 </div>

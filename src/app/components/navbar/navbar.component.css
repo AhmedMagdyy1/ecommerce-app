@@ -23,3 +23,8 @@
 .active-link {
   color: green !important;
 }
+
+
+.cart {
+  width: fit-content;
+}

@@ -1,7 +1,7 @@
 <div class="container">
     <input type="text" [(ngModel)]="searchKey" class="form-control mx-auto my-4 w-50" placeholder="Search by name..">
     <div class="row my-5 g-3 itemProducts">
-        <div class="col-md-2" *ngFor="let product of allProducts | productSearch : searchKey">
+        <div class="col-md-3" *ngFor="let product of allProducts | productSearch : searchKey">
             <app-product-item [product]="product"></app-product-item>
         </div>
     </div>
