@@ -1,3 +1,6 @@
+export interface ProductDetails {
+  data: Product;
+}
 export interface Product {
   sold: number;
   images: string[];

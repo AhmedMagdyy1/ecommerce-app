@@ -1,68 +1,115 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from 'src/app/core/interfaces/product';
+import { CartDetails } from 'src/app/core/interfaces/cart';
+import { Product, ProductDetails } from 'src/app/core/interfaces/product';
 import { ProductsService } from 'src/app/core/services/products.service';
-import { OwlOptions } from 'ngx-owl-carousel-o/public_api';
+import { WishListService } from 'src/app/core/services/wish-list.service';
 import { CartService } from 'src/app/core/shared/cart.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent {
-
-  productId:string =''
-  productDetails:Product= {} as Product
-
-
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 1
-      },
-      500: {
-        items:3
-      },
-      992:{
-        items:5
-      }
-    },
-    nav: true
-  }
-
-
+  params: string = '';
+  productDetails: Product | null = null;
+  displayedImage: string = '';
+  isLoading: boolean = false;
+  isWishLoading: boolean = false;
 
   constructor(
-    private _activatedRoute:ActivatedRoute,
-     private _productService:ProductsService,
-     private _cart:CartService
-     ){
-    this._activatedRoute.params.subscribe((res:any)=>{
-      console.log(res);
-      this.productId = res.id
-    })
-    this._productService.getProductById(this.productId).subscribe((res:any)=>{
-      console.log(res);
-      this.productDetails = res.data
-    })
+    private _ActivatedRoute: ActivatedRoute,
+    private _ProductsService: ProductsService,
+    private _CartService: CartService,
+    private _WishlistService: WishListService
+  ) {}
+
+  ngOnInit(): void {
+    this._ActivatedRoute.params.subscribe((value) => {
+      this.params = value['id'];
+      this.getSpecificProduct(this.params);
+    });
   }
 
-
-
-
-  addToCart(id:string){
-    this._cart.addProductToCart(id).subscribe((res)=>{
-      console.log(res);
-
-    })
+  getSpecificProduct(id: string) {
+    this._ProductsService.getSpecificProduct(id).subscribe({
+      next: (response: ProductDetails) => {
+        this.productDetails = response.data;
+        this.displayedImage = this.productDetails.images[0];
+      },
+    });
   }
 
+  changeDisplayedImage(par: any) {
+    this.displayedImage = par.getAttribute('src');
+  }
+
+  addToCart(productId: string) {
+    this.isLoading = true;
+    this._CartService.addProductToCart(productId).subscribe({
+      next: (response: CartDetails) => {
+        this._CartService.numberOfItems.next(response.numOfCartItems);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 2000,
+          icon: 'success',
+          customClass: {
+            timerProgressBar: 'progress-bar',
+          },
+          showClass: {
+            popup: 'animate__animated animate__fadeInRightBig',
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutRightBig',
+          },
+          title: `Product added to your cart`,
+        });
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  addToWishList(name: string, productId: string) {
+    this.isWishLoading = true;
+    this._WishlistService.addToWishList(productId).subscribe({
+      next: (response) => {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 2000,
+          icon: 'success',
+          customClass: {
+            timerProgressBar: 'progress-bar',
+          },
+          showClass: {
+            popup: 'animate__animated animate__fadeInRightBig',
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutRightBig',
+          },
+          html: `<div>${name
+            .split(' ')
+            .splice(0, 2)
+            .join(
+              ' '
+            )} added to your wishlist</div> <i class="fa-solid text-danger fa-heart"></i>`,
+        });
+        this._WishlistService.checkWishListItems();
+        this.isWishLoading = false;
+      },
+      error: (err) => {
+        this.isWishLoading = false;
+      },
+    });
+  }
 }

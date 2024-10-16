@@ -49,4 +49,8 @@ export class ProductsService {
   getProductById(id:string):Observable<any>{
     return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
   }
+
+  getSpecificProduct(id: string): Observable<any> {
+    return this._httpClient.get(`${this.baseUrl}/api/v1/products/${id}`);
+  }
 }
