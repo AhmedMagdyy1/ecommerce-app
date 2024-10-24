@@ -107,7 +107,7 @@ export class ProductsComponent {
   }
 
   openProductDetails(productId: string) {
-    this._Router.navigate(['/productdetails', productId]);
+    this._Router.navigate(['/productDetails', productId]);
   }
 
   filterPrice(price: string) {
