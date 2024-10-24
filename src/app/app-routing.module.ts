@@ -33,13 +33,14 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'forgetPassword', component: ForgetPasswordComponent },
-  { path: 'checkout/:cartId', component: CheckoutComponent },
+  { path: 'checkout', canActivate: [authGuard], component: CheckoutComponent },
   { path: 'allorders', component: OrdersComponent },
   { path: 'wishlist', component: WishlistComponent },
   {
     path: 'cart',
     canActivate: [authGuard],
-    loadChildren: () => import('./core/shared/cart.module').then((m) => m.CartModule),
+    loadChildren: () =>
+      import('./core/shared/cart.module').then((m) => m.CartModule),
   },
   { path: '**', component: NotfoundComponent },
 ];
@@ -48,6 +49,6 @@ const routes: Routes = [
   // to make # in the url when the app is on real server /#/cart
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   // import { NotfoundComponent } from './pages/not-found/notfound.component';
-exports: [RouterModule],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

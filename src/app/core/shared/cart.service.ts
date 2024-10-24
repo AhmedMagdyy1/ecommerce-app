@@ -9,11 +9,13 @@ export class CartService {
 
 
   numberOfItems:BehaviorSubject<number> = new BehaviorSubject(0)
-  cartId:BehaviorSubject<string> = new BehaviorSubject('')
+  cartId: string = '';
+
+  // cartId:BehaviorSubject<string> = new BehaviorSubject('')
   constructor(private _http:HttpClient) {
     this.getUserCart().subscribe((res)=>{
       this.numberOfItems.next(res.numOfCartItems)
-      this.cartId.next(res.data._id)
+      this.cartId = res.data._id
     })
   }
 
@@ -35,9 +37,25 @@ export class CartService {
   clearUserCart(): Observable<any> {
     return this._http.delete(`https://ecommerce.routemisr.com/api/v1/cart/`);
   }
-  handleOnlinePayment(cartId:string,shippingAddress:any):Observable<any>{
-    return this._http.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://freshcart-five-psi.vercel.app/#/home`,{
-      shippingAddress:shippingAddress
-    })
+
+  createCashOrder(addressValue: Object): Observable<any> {
+    return this._http.post(
+      `https://ecommerce.routemisr.com/api/v1/orders/${this.cartId}`,
+      { shippingAddress: addressValue }
+    );
+  }
+
+
+  // handleOnlinePayment(cartId:string,shippingAddress:any):Observable<any>{
+  //   return this._http.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://freshcart-five-psi.vercel.app/#/home`,{
+  //     shippingAddress:shippingAddress
+  //   })
+  // }
+
+  onlineGatewayPayment(addressValue: Object): Observable<any> {
+    return this._http.post(
+      `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${this.cartId}?url=https://freshcart-five-psi.vercel.app/#/home`,
+      { shippingAddress: addressValue }
+    );
   }
 }

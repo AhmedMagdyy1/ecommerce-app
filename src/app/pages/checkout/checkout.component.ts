@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../core/shared/cart.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CartDetails } from 'src/app/core/interfaces/cart';
 
 @Component({
   selector: 'app-checkout',
@@ -12,36 +13,48 @@ export class CheckoutComponent implements OnInit {
 
   cartId:string = ''
 
-  constructor(private _cart:CartService,private _route:ActivatedRoute){
-    
-    
-    // another way to get cartId wiz behavior subject from cart
-
-    // this._cart.cartId.subscribe((res)=>{
-    //   this.cartId = res
-    // })
-  }
-
+  constructor(private _CartService: CartService, private _Router: Router) {}
 
   ngOnInit(): void {
-    this._route.params.subscribe((res:any)=>{
-      console.log(res);
-      this.cartId = res.cartId
-    })
+    this._CartService.getUserCart().subscribe({
+      next: (response: CartDetails) => {
+        this._CartService.cartId = response.data._id
+      },
+      error: (err) => {},
+    });
   }
-    shippingAddress:FormGroup=new FormGroup({
-      details: new FormControl(null),
-      phone:new FormControl(null),
-      city: new FormControl(null)
-    })
 
+  checkOutForm: FormGroup = new FormGroup({
+    address: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    phone: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/^01[1250][0-9]{8}$/),
+    ]),
+    city: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+  });
 
-    checkoutDetails(form:FormGroup){
-      console.log(form.value);
-      this._cart.handleOnlinePayment(this.cartId,form.value).subscribe((res)=>{
-        if(res.status == 'success'){
-          window.location.href = res.session.url
-        }
-      })
+  handleOfflinePay(form: FormGroup) {
+    if (form.valid) {
+      this._CartService.createCashOrder(form.value).subscribe({
+        next: (response) => {
+          this._Router.navigate(['/allorders']);
+        },
+        error: (err) => {},
+      });
     }
+  }
+
+  handleOnlinePay(form: FormGroup) {
+    if (form.valid) {
+      this._CartService.onlineGatewayPayment(form.value).subscribe({
+        next: (response) => {
+          window.location = response.session.url;
+        },
+        error: (err) => {},
+      });
+    }
+  }
 }
