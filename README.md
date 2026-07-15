@@ -18,23 +18,35 @@ Built with [Angular CLI](https://github.com/angular/angular-cli) 16, Angular Mat
 
 ### Catalog
 
-- **Products** — browse all products, view details, and search/filter.
+- **Products** — browse the full catalog with pagination (page numbers plus next/previous, driven by the API's `metadata.numberOfPages`), and view full product details.
+- **Search** — live, case-insensitive search-as-you-type by product name on the home page's featured-products section.
+- **Sorting** — sort products by price, lowest-to-highest or highest-to-lowest.
+- **Filtering** — filter the product list by category or brand (jumping in from the Categories/Brands pages), with an active-filters banner and a one-click "Clear Filters" reset.
 - **Categories** and **Brands** — browse products grouped by category or brand.
-- **Wishlist** — save products for later; the navbar shows a live item-count badge.
+- **Wishlist** — toggle a product in/out of the wishlist with a heart icon (shown as loading while the request is in flight); the navbar shows a live item-count badge.
 
 ### Cart & Checkout
 
-- **Cart** — add, update quantity, remove items, or clear the whole cart; the navbar shows a live cart-count badge.
+- **Add / remove from cart** — add a product to the cart from the product grid, product details, or wishlist; remove a single item or clear the entire cart.
+- **Quantity controls** — increment/decrement an item's quantity in the cart; decrementing to 0 automatically removes the item.
+- **Cart badge** — the navbar shows a live cart-item-count badge, kept in sync across pages via a shared `BehaviorSubject`.
 - **Checkout** — enter shipping address, city, and phone, then pay:
   - **Cash on delivery** — creates an order directly.
-  - **Online payment** — creates a Stripe checkout session via the API and redirects to the hosted payment page.
+  - **Online payment** — powered by **Stripe**: the API creates a Stripe Checkout session and the user is redirected to Stripe's hosted payment page to complete the purchase.
 - **Orders** — view all past orders.
 
-### Routing
+### Routing & Performance
 
 - Hash-based routing (`useHash: true`), so the app can be hosted on any static server without server-side rewrite rules.
-- Lazy-loaded `CartModule` for the `/cart` route.
+- **Lazy loading** — the `CartModule` is lazy-loaded via the router's `loadChildren`, so its code is only downloaded when the user navigates to `/cart`, keeping the initial bundle smaller.
 - A wildcard `**` route renders a "Not Found" page for unmatched URLs.
+
+### UX Details
+
+- **Global loading indicator** — an `HttpInterceptor` shows/hides a loader on every outgoing API request.
+- **Auth header injection** — the same interceptor attaches the stored token to every outgoing request automatically.
+- **Toast notifications** — SweetAlert2 toasts confirm cart/wishlist actions (add/remove) and surface success/error messages during password reset.
+- **Title truncation** — a custom `stringTrim` pipe keeps product titles a consistent length across product cards.
 
 ## Getting Started
 
@@ -65,6 +77,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 - [Angular 16](https://angular.io/) with Angular Material & CDK
 - [Bootstrap 5](https://getbootstrap.com/) for layout/utility styling
+- [Stripe](https://stripe.com/) Checkout for online payment processing
 - [RxJS](https://rxjs.dev/) for reactive state (cart count, wishlist count, user data)
 - [jwt-decode](https://github.com/auth0/jwt-decode) for decoding the auth token
 - [SweetAlert2](https://sweetalert2.github.io/) and [ngx-toastr](https://github.com/scttcper/ngx-toastr) for notifications
