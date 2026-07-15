@@ -22,7 +22,7 @@ export class SignUpComponent {
     email: new FormControl('',[Validators.required,Validators.email]),
     password: new FormControl('',[Validators.required,Validators.pattern(/^[A-Z][a-z0-9]{3,8}$/)]),
     rePassword: new FormControl('',[Validators.required,Validators.pattern(/^[A-Z][a-z0-9]{3,8}$/)]),
-    phone: new FormControl('',[Validators.required,Validators.minLength(10),Validators.maxLength(13)]),
+    phone: new FormControl('',[Validators.required,Validators.pattern(/^01[1250][0-9]{8}$/)]),
   })
 
 // Toggle password visibility

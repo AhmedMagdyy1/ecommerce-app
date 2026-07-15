@@ -108,13 +108,14 @@
             matInput
             type="tel"
             formControlName="phone"
-            placeholder="Enter your phone number"
+            placeholder="e.g. 01012345678"
           />
+          <mat-hint>Egyptian number, e.g. 01012345678 (010/011/012/015 + 8 digits)</mat-hint>
           <mat-error *ngIf="registerForm.get('phone')?.hasError('required')">
             Phone number is required and must be an Egyptian number.
           </mat-error>
           <mat-error *ngIf="registerForm.get('phone')?.hasError('pattern')">
-            Please enter a valid phone number.
+            Please enter a valid Egyptian phone number, e.g. 01012345678.
           </mat-error>
         </mat-form-field>
       </div>
